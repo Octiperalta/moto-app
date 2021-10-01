@@ -1,5 +1,5 @@
-import React from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View, ActivityIndicator } from "react-native";
 import Text from "./CustomText";
 import tw from "tailwind-react-native-classnames";
 import { Feather } from "@expo/vector-icons";
@@ -8,6 +8,7 @@ import { removeItem } from "../store/actions/cart.actions";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true)
 
   const handleDeleteItem = () => {
     dispatch(removeItem(item.id));
@@ -21,10 +22,22 @@ const CartItem = ({ item }) => {
         style={tw`w-24 h-24 bg-gray-100 p-2 flex justify-center rounded-lg items-center`}>
         <Image
           source={{ uri: item.imageUrl }}
+          onLoadEnd={() => setLoading(false)}
           style={tw.style("w-full h-20 ", {
             resizeMode: "contain",
           })}
         />
+
+        {loading && (
+          <View
+            style={tw.style("self-center justify-center absolute", {
+              width: 200,
+              height: 200,
+            })}>
+            <ActivityIndicator size='small' color={tw.color("red-500")} />
+          </View>
+        )}
+        
       </View>
       {/* details */}
       <View style={tw`ml-3 mt-1 flex-1 justify-between`}>
@@ -38,14 +51,14 @@ const CartItem = ({ item }) => {
         </View>
         <View style={tw`flex flex-row justify-between items-center`}>
           <View style={tw`flex flex-row items-start`}>
-            <Text fontWeight='semibold' style={tw`text-base text-gray-500`}>
+            <Text fontWeight='semibold' style={tw`text-sm text-gray-500`}>
               ${" "}
             </Text>
             <Text fontWeight='bold' style={tw`text-xl text-red-500`}>
               {item.price}
             </Text>
           </View>
-          <TouchableOpacity onPress={handleDeleteItem}>
+          <TouchableOpacity onPress={handleDeleteItem} style={tw`w-8 h-8 justify-center`}>
             <Feather name='trash-2' size={22} color={tw.color("red-500")} />
           </TouchableOpacity>
         </View>

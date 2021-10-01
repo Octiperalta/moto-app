@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Text from "../../components/CustomText";
 import tw from "tailwind-react-native-classnames";
 import {
@@ -10,27 +16,37 @@ import {
 } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem } from "../../store/actions/cart.actions";
+import {
+  addItemToFavs,
+  removeItemFromFavs,
+} from "../../store/actions/favs.actions";
 
-const ProductDetail = ({ navigation }) => {
+const ProductDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.products.list);
   const cartList = useSelector(state => state.cart.items);
+  const favoritesList = useSelector(state => state.favorites.items);
   const productID = useSelector(state => state.products.selectedID);
   const selectedProduct = products.find(item => productID === item.id);
+  const isPopular = selectedProduct.isPopular;
+  const hideCartIcon = route.params?.hideCartIcon || false;
 
-  const [isFav, setIsFav] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isFav, setIsFav] = useState(
+    favoritesList.some(item => item.id === productID)
+  );
   const [inCart, setInCart] = useState(
     cartList.some(item => item.id === productID)
   );
 
-  const handleAddToCart = () => {
-    setInCart(true);
-    dispatch(addItem(selectedProduct));
+  const handleAdd = (setFunction, addFunction) => {
+    setFunction(true);
+    dispatch(addFunction(selectedProduct));
   };
 
-  const handleRemoveFromCart = () => {
-    setInCart(false);
-    dispatch(removeItem(productID));
+  const handleRemove = (setFunction, deleteFunction) => {
+    setFunction(false);
+    dispatch(removeFunction(productID));
   };
 
   const goBack = () => {
@@ -57,46 +73,67 @@ const ProductDetail = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         {/* RIGHT */}
-        <View>
-          <TouchableOpacity onPress={goToCart}>
-            <Feather
-              name='shopping-cart'
-              size={26}
-              color={tw.color("gray-700")}
-            />
-          </TouchableOpacity>
-        </View>
+        {!hideCartIcon && (
+          <View>
+            <TouchableOpacity onPress={goToCart}>
+              <Feather
+                name='shopping-cart'
+                size={26}
+                color={tw.color("gray-700")}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
       {/* PRODUCT IMAGE */}
       <View style={tw`-mt-2`}>
         <Image
           source={{ uri: selectedProduct.imageUrl }}
+          onLoadEnd={() => setLoading(false)}
           style={tw.style("self-center", {
             width: 200,
             height: 200,
             resizeMode: "contain",
           })}
         />
+
+        {loading && (
+          <View
+            style={tw.style("self-center justify-center absolute", {
+              width: 200,
+              height: 200,
+            })}>
+            <ActivityIndicator size='large' color={tw.color("red-500")} />
+          </View>
+        )}
       </View>
 
       {/* PRODUCT DETAILS */}
       <View style={tw`bg-gray-200 mt-2 flex-1 rounded-t-3xl px-6 py-5`}>
         {/* HEADER DETAILS */}
         <View style={tw`flex flex-row justify-between items-center`}>
-          <View style={tw`w-24 px-1 py-1 rounded-lg bg-red-200 items-center`}>
-            <Text fontWeight='semibold' style={tw`text-sm text-red-500`}>
-              Popular
-            </Text>
-          </View>
-          <View>
-            <TouchableOpacity onPress={() => setIsFav(state => !state)}>
+          {isPopular && (
+            <View style={tw`w-24 px-1 py-1 rounded-lg bg-red-200 items-center`}>
+              <Text fontWeight='semibold' style={tw`text-sm text-red-500`}>
+                Popular
+              </Text>
+            </View>
+          )}
+          <View style={tw`ml-auto`}>
+            <TouchableOpacity
+              style={tw`w-10 h-10 items-center justify-center`}
+              onPress={() =>
+                isFav
+                  ? handleRemove(setIsFav, removeItemFromFavs)
+                  : handleAdd(setIsFav, addItemToFavs)
+              }>
               {isFav ? (
-                <AntDesign name='heart' size={22} color={tw.color("red-600")} />
+                <AntDesign name='heart' size={24} color={tw.color("red-600")} />
               ) : (
                 <AntDesign
                   name='hearto'
-                  size={22}
+                  size={24}
                   color={tw.color("gray-700")}
                 />
               )}
@@ -105,7 +142,7 @@ const ProductDetail = ({ navigation }) => {
         </View>
 
         {/* MAIN DETAILS */}
-        <View style={tw`mt-5 flex-1`}>
+        <View style={tw`mt-1 flex-1`}>
           <Text fontWeight='bold' style={tw`text-3xl text-gray-700`}>
             {selectedProduct.name}
           </Text>
@@ -166,7 +203,11 @@ const ProductDetail = ({ navigation }) => {
               "px-4 py-3 rounded-lg shadow-md w-44 items-center",
               inCart ? "bg-red-600" : "bg-red-500"
             )}
-            onPress={inCart ? handleRemoveFromCart : handleAddToCart}>
+            onPress={() =>
+              inCart
+                ? handleRemove(setInCart, removeItem)
+                : handleAdd(setInCart, addItem)
+            }>
             <Text fontWeight='medium' style={tw`text-gray-100 text-lg`}>
               {inCart ? "Agregado" : "Agregar al Carrito"}
             </Text>

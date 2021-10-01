@@ -7,6 +7,8 @@ import UserScreen from "../../screens/user/UserScreen";
 import OrderScreen from "../../screens/orders/OrderScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import tw from "tailwind-react-native-classnames";
+import FavNavigator from "../shop/FavNavigator";
+import OrderNavigator from "../order/OrderNavgation";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,9 +19,10 @@ const TabNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarStyle: tw`bg-gray-50 rounded-lg relative shadow-lg px-3 h-16 items-center` 
       }}>
       <Tab.Screen
-        name='Home'
+        name='HomeTab'
         component={ShopNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -28,8 +31,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name='Favourites'
-        component={Cart}
+        name='FavoritesTab'
+        component={FavNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon name='favorite' size={26} focused={focused} />
@@ -37,7 +40,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name='User'
+        name='UserTab'
         component={OrderScreen}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -46,8 +49,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name='Orders'
-        component={OrderScreen}
+        name='OrdersTab'
+        component={OrderNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon name='assignment' size={28} focused={focused} />

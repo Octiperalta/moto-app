@@ -2,17 +2,18 @@ import React, { useLayoutEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../../screens/shop/HomeScreen";
 import ProductDetail from "../../screens/shop/ProductDetailScreen";
-import Cart from "../../screens/cart/Cart";
-import CategoryScreen from "../../screens/shop/CategoryScreen";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import tw from "tailwind-react-native-classnames";
+import Favorites from "../../screens/fav/Favorites";
+import OrderScreen from "../../screens/orders/OrderScreen";
+import OrderDetailScreen from "../../screens/orders/OrderDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
-const ShopNavigator = ({ navigation, route }) => {
+const OrderNavigator = ({ navigation, route }) => {
   useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    const tabHiddenRoutes = ["ProductDetail", "CartList", "CategoryProducts"];
+    const tabHiddenRoutes = ["OrderDetail"];
     
     if (tabHiddenRoutes.includes(routeName)) {
       navigation.setOptions({ tabBarStyle: tw`hidden` });
@@ -21,14 +22,13 @@ const ShopNavigator = ({ navigation, route }) => {
     }
   }, [navigation, route]);
 
+  
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRoute='Shop'>
-      <Stack.Screen name='Shop' component={Home} />
-      <Stack.Screen name='ProductDetail' component={ProductDetail} />
-      <Stack.Screen name='CategoryProducts' component={CategoryScreen} />
-      <Stack.Screen name='CartList' component={Cart} />
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRoute='Orders'>
+      <Stack.Screen name='Orders' component={OrderScreen} />
+      <Stack.Screen name='OrderDetail' component={OrderDetailScreen} />
     </Stack.Navigator>
   );
 };
 
-export default ShopNavigator;
+export default OrderNavigator;

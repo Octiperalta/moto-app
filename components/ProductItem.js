@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import Text from "./CustomText";
 import tw from "tailwind-react-native-classnames";
 import { Entypo } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import ImageBlurLoading from "react-native-image-blur-loading";
 
 const ProductItem = ({ item, onPress: onSelected }) => {
-  const dispatch = useDispatch()
-  const cartItems = useSelector(state => state.cart.items)
+  const [loading, setLoading] = useState(true);
 
-  
   return (
     <TouchableOpacity
       style={tw`bg-gray-200 flex-1 p-3 rounded-2xl m-2 `}
@@ -18,12 +21,23 @@ const ProductItem = ({ item, onPress: onSelected }) => {
       <View>
         <Image
           source={{ uri: item.imageUrl }}
+          onLoadEnd={() => setLoading(false)}
           style={tw.style("self-center", {
             width: 100,
             height: 100,
             resizeMode: "contain",
           })}
         />
+
+        {loading && (
+          <View
+            style={tw.style("self-center justify-center absolute", {
+              width: 100,
+              height: 100,
+            })}>
+            <ActivityIndicator size='small' color={tw.color("red-500")} />
+          </View>
+        )}
         <View style={tw`mt-1`}>
           <Text
             numberOfLines={1}

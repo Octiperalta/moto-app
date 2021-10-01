@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FlatList,
   Image,
@@ -13,13 +13,16 @@ import Text from "../../components/CustomText";
 import { Feather, Octicons, Entypo } from "@expo/vector-icons";
 import ProductItem from "../../components/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProduct } from "../../store/actions/product.actions";
+import {
+  filterPopular,
+  selectProduct,
+} from "../../store/actions/product.actions";
 import { selectCategory } from "../../store/actions/category.actions";
 import CategoryItem from "../../components/CategoryItem";
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products.list);
+  const popularProducts = useSelector(state => state.products.popularProducts);
   const categories = useSelector(state => state.categories.list);
 
   const handleSelectedProduct = item => {
@@ -40,6 +43,9 @@ const Home = ({ navigation }) => {
     return <ProductItem item={item} onPress={handleSelectedProduct} />;
   };
 
+  useEffect(() => {
+    dispatch(filterPopular());
+  }, []);
   return (
     <View style={tw`flex-1 bg-gray-50 px-7`}>
       {/* HEADER */}
@@ -125,10 +131,10 @@ const Home = ({ navigation }) => {
         </View>
 
         {/* PRODUCT LIST */}
-        <View style={tw`mt-4 flex-1`}>
+        <View style={tw`mt-2 -mx-1 flex-1`}>
           {/* PRODUCT */}
           <FlatList
-            data={products}
+            data={popularProducts}
             renderItem={renderProduct}
             keyExtractor={item => item.id}
             numColumns={2}
