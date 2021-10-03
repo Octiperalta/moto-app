@@ -1,10 +1,9 @@
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
-import { MaterialIcons } from "@expo/vector-icons";
 import Text from "../../components/CustomText";
 
-const OrderConfirmation = () => {
+const OrderConfirmation = ({ navigation }) => {
   return (
     <View style={tw`flex-1 bg-white`}>
       <View style={tw`mt-16 mb-10 flex-1 justify-between`}>
@@ -47,6 +46,7 @@ const OrderConfirmation = () => {
 
         <View style={tw`mx-6`}>
           <TouchableOpacity
+            onPress={() => navigation.navigate("Shop")}
             style={tw`bg-red-500 mt-4 rounded-lg px-2 py-2 flex-row justify-center items-center relative`}>
             <Text fontWeight='bold' style={tw`text-gray-50 text-lg`}>
               Back to Home

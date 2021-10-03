@@ -1,12 +1,27 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, TouchableOpacity, View, FlatList } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import Text from "../../components/CustomText";
 import { MaterialIcons, Octicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { loadOrders } from "../../store/actions/orders.actions";
 
 const OrderScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const userId = useSelector(state => state.auth.userId);
+
   const go = () => {
     navigation.navigate("OrderDetail");
+  };
+
+  const orderList = useSelector(state => state.orders.list);
+
+  useEffect(() => {
+    dispatch(loadOrders(userId));
+  }, []);
+
+  const renderItem = ({ item }) => {
+    return <OrderItem item={item} />;
   };
 
   return (
@@ -24,69 +39,18 @@ const OrderScreen = ({ navigation }) => {
           Your Parcels
         </Text>
         {/* List */}
-        <View>
-          {/* Order */}
-          <TouchableOpacity
-            style={tw`flex-row bg-gray-200 px-3 py-3 mt-3 rounded-lg shadow-sm items-center`}>
-            {/* icon */}
-            <View style={tw`bg-gray-100 rounded-lg p-2 `}>
-              <MaterialIcons
-                name='delivery-dining'
-                size={29}
-                color={tw.color("gray-400")}
-              />
+        <View style={tw`flex-1`}>
+          {orderList.length > 0 ? (
+            <FlatList
+              data={orderList}
+              keyExtractor={item => String(item.id)}
+              renderItem={renderItem}
+            />
+          ) : (
+            <View style={tw`justify-center items-center flex-1`}>
+              <Text fontWeight='semibold' style={tw`text-gray-300 text-xl`}>You don't have orders yet.</Text>
             </View>
-            <View style={tw`ml-3 flex-1`}>
-              <Text fontWeight='semibold' style={tw`text-lg text-gray-700`}>
-                {Date.now().toString()}
-              </Text>
-              <Text fontWeight='medium' style={tw`text-gray-500`}>
-                Buenos Aires, Argentina
-              </Text>
-            </View>
-
-            <View style={tw`flex-row items-center`}>
-              <Octicons
-                name='primitive-dot'
-                size={10}
-                color={tw.color("gray-500")}
-              />
-              <Text fontWeight='semibold' style={tw`text-gray-500 ml-1`}>
-                Transit
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={go}
-            style={tw`flex-row bg-gray-200 px-3 py-3 mt-3 rounded-lg shadow-sm items-center`}>
-            {/* icon */}
-            <View style={tw`bg-gray-100 rounded-lg p-2 `}>
-              <MaterialIcons
-                name='delivery-dining'
-                size={29}
-                color={tw.color("gray-400")}
-              />
-            </View>
-            <View style={tw`ml-3 flex-1`}>
-              <Text fontWeight='semibold' style={tw`text-lg text-gray-700`}>
-                {Date.now().toString()}
-              </Text>
-              <Text fontWeight='medium' style={tw`text-gray-500`}>
-                Buenos Aires, Argentina
-              </Text>
-            </View>
-
-            <View style={tw`flex-row items-center`}>
-              <Octicons
-                name='primitive-dot'
-                size={10}
-                color={tw.color("gray-500")}
-              />
-              <Text fontWeight='semibold' style={tw`text-gray-500 ml-1`}>
-                Transit
-              </Text>
-            </View>
-          </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
@@ -94,5 +58,36 @@ const OrderScreen = ({ navigation }) => {
 };
 
 export default OrderScreen;
+
+const OrderItem = ({ item }) => {
+  return (
+    <TouchableOpacity
+      style={tw`flex-row bg-gray-200 px-3 py-3 mt-3 rounded-lg shadow-sm items-center`}>
+      {/* icon */}
+      <View style={tw`bg-gray-100 rounded-lg p-2 `}>
+        <MaterialIcons
+          name='delivery-dining'
+          size={29}
+          color={tw.color("gray-400")}
+        />
+      </View>
+      <View style={tw`ml-3 flex-1`}>
+        <Text fontWeight='semibold' style={tw`text-lg text-gray-700`}>
+          {item.trackingCode}
+        </Text>
+        <Text fontWeight='medium' style={tw`text-gray-500`}>
+          Buenos Aires, Argentina
+        </Text>
+      </View>
+
+      <View style={tw`flex-row items-center`}>
+        <Octicons name='primitive-dot' size={10} color={tw.color("gray-500")} />
+        <Text fontWeight='semibold' style={tw`text-gray-500 ml-1`}>
+          Transit
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({});

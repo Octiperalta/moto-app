@@ -9,7 +9,7 @@ const CategoryItem = ({ category, onPress: onSelected }) => {
       <TouchableOpacity
         style={tw`w-14 h-14 bg-gray-200 rounded-lg`}
         onPress={() => onSelected(category)}></TouchableOpacity>
-      <Text style={tw`text-red-800 text-xs`} fontWeight='semibold'>
+      <Text style={tw`text-gray-700 text-xs`} fontWeight='semibold'>
         {category.name}
       </Text>
     </View>
@@ -17,5 +17,3 @@ const CategoryItem = ({ category, onPress: onSelected }) => {
 };
 
 export default CategoryItem;
-
-const styles = StyleSheet.create({});

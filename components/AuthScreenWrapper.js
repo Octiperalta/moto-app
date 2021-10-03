@@ -7,15 +7,22 @@ import {
   TouchableOpacity,
   View,
   Keyboard,
+  ActivityIndicator,
 } from "react-native";
 import Text from "./CustomText";
 import tw from "tailwind-react-native-classnames";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
+import { useSelector } from "react-redux";
 
-const AuthScreenWrapper = ({ register = false, redirectPath, children }) => {
-  const [hide, setHide] = useState(true);
+const AuthScreenWrapper = ({
+  register = false,
+  redirectPath,
+  onSubmit,
+  children,
+}) => {
   const navigation = useNavigation();
+  const loading = useSelector(state => state.auth.loading);
 
   const navigateTo = () => {
     navigation.navigate(redirectPath);
@@ -51,13 +58,22 @@ const AuthScreenWrapper = ({ register = false, redirectPath, children }) => {
 
               <View style={tw`mt-6`}>
                 <TouchableOpacity
+                  onPress={onSubmit}
                   style={tw.style(
-                    "bg-red-500 items-center rounded-lg py-2",
+                    "bg-red-500 flex-row justify-center items-center rounded-lg py-2",
                     styles.shadow
                   )}>
                   <Text fontWeight='semibold' style={tw`text-xl text-gray-50`}>
                     {register ? "Sign Up" : "Login"}
                   </Text>
+                  {loading && (
+                    <View style={tw`absolute right-4`}>
+                      <ActivityIndicator
+                        size='small'
+                        color={tw.color("gray-50")}
+                      />
+                    </View>
+                  )}
                 </TouchableOpacity>
               </View>
             </View>

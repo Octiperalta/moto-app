@@ -25,6 +25,10 @@ const Home = ({ navigation }) => {
   const popularProducts = useSelector(state => state.products.popularProducts);
   const categories = useSelector(state => state.categories.list);
 
+  const goToCart = () => {
+    navigation.navigate("CartList");
+  };
+
   const handleSelectedProduct = item => {
     dispatch(selectProduct(item.id));
     navigation.navigate("ProductDetail");
@@ -63,42 +67,21 @@ const Home = ({ navigation }) => {
         </View>
         {/* RIGHT */}
         <View style={tw`mt-2`}>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Image
               source={require("../../assets/default-avatar.png")}
               style={tw`h-12 w-12`}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
-          {/* <TouchableOpacity>
+          <TouchableOpacity onPress={goToCart}>
             <Feather
               name='shopping-cart'
               size={26}
               color={tw.color("gray-700")}
             />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
-      </View>
-
-      {/* SEARCH BAR */}
-      <View style={tw`mt-8  flex-row`}>
-        {/* SEARCH INPUT */}
-        <View
-          style={tw`flex-row flex-1 px-3 h-11 items-center rounded-lg bg-gray-200`}>
-          <Feather name='search' size={22} color='rgba(31, 41, 55, 1)' />
-          <TextInput
-            style={tw`text-gray-800 h-full px-2 flex-1 text-lg ${
-              Platform.OS === "ios" ? "pb-3" : ""
-            }`}
-            blurOnSubmit={true}
-            autoCorrect={false}
-          />
-        </View>
-        {/* FILTER BUTTON */}
-        <TouchableOpacity
-          style={tw`w-10 ml-2 flex-shrink-0 bg-red-500 flex items-center justify-center rounded-lg`}>
-          <Octicons name='settings' size={24} color='rgba(243, 244, 246, 1) ' />
-        </TouchableOpacity>
       </View>
 
       {/* CATEGORIES */}

@@ -1,22 +1,42 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import AuthScreenWrapper from '../../components/AuthScreenWrapper'
-import Input from '../../components/Input'
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import AuthScreenWrapper from "../../components/AuthScreenWrapper";
+import Input from "../../components/Input";
 
 const LoginScreen = () => {
-    return (
-        <AuthScreenWrapper redirectPath="Register">
-            <Input redirectPath="Register" label="Email" icon="mail" keyboardType="email-address" />
-            <Input label="Password" icon="lock" password/>
-        </AuthScreenWrapper>
-    )
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = () => {};
+
+  return (
+    <AuthScreenWrapper redirectPath='Register' onSubmit={handleSubmit}>
+      <Input
+        redirectPath='Register'
+        label='Email'
+        icon='mail'
+        keyboardType='email-address'
+        onChangeText={e => setEmail(e)}
+        value={email}
+      />
+      <Input
+        label='Password'
+        icon='lock'
+        password
+        value={password}
+        onChangeText={e => setPassword(e)}
+      />
+    </AuthScreenWrapper>
+  );
+};
+
+export default LoginScreen;
+
+const styles = StyleSheet.create({});
+
+{
+  /* field 1*/
 }
-
-export default LoginScreen
-
-const styles = StyleSheet.create({})
-
- {/* field 1*/}
 //  <View style={tw`mt-6`}>
 //  {/* label */}
 //  <View style={tw`flex-row items-center`}>

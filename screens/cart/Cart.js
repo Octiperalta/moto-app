@@ -1,22 +1,46 @@
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import tw from "tailwind-react-native-classnames";
 import Text from "../../components/CustomText";
-import { MaterialIcons, Feather } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
 import CartItem from "../../components/CartItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  CLEAR_CART,
+  confirmCart,
+  FINISH_CONFIRMATION,
+  START_CONFIRMATION,
+} from "../../store/actions/cart.actions";
 
 const Cart = ({ navigation }) => {
+  const dispatch = useDispatch();
   const cartProducts = useSelector(state => state.cart.items);
   const cartTotal = useSelector(state => state.cart.total);
+  const userId = useSelector(state => state.auth.userId);
+  const loading = useSelector(state => state.cart.loading);
 
   const renderItem = ({ item }) => {
     return <CartItem item={item} />;
   };
-
   const goBack = () => {
     navigation.goBack();
+  };
+
+  const handleConfirmCart = () => {
+    dispatch({ type: START_CONFIRMATION });
+    dispatch(confirmCart(cartTotal, userId));
+    setTimeout(() => {
+      navigation.navigate("OrderConfirmed");
+      dispatch({ type: FINISH_CONFIRMATION });
+      dispatch({ type: CLEAR_CART });
+    }, 2000);
   };
 
   return (
@@ -46,11 +70,19 @@ const Cart = ({ navigation }) => {
 
       {/* PRODUCTS LIST  */}
       <View style={tw`mt-6 px-7 flex-1`}>
-        <FlatList
-          data={cartProducts}
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-        />
+        {cartProducts.length ? (
+          <FlatList
+            data={cartProducts}
+            keyExtractor={item => item.id}
+            renderItem={renderItem}
+          />
+        ) : (
+          <View style={tw`justify-center items-center flex-1`}>
+            <Text fontWeight='semibold' style={tw`text-gray-300 text-xl`}>
+              Your cart is empty. Go shopping!
+            </Text>
+          </View>
+        )}
       </View>
 
       {/* CHECKOUT */}
@@ -71,16 +103,21 @@ const Cart = ({ navigation }) => {
         </View>
         <View style={tw`shadow-xl`}>
           <TouchableOpacity
+            onPress={handleConfirmCart}
             style={tw`bg-red-500 mt-4 rounded-lg px-2 py-2 flex-row justify-center items-center relative`}>
             <Text fontWeight='bold' style={tw`text-gray-50 text-lg`}>
               Buy now
             </Text>
             <View style={tw`absolute right-4 bg-red-900 rounded-md p-1`}>
-              <MaterialIcons
-                name='arrow-forward'
-                size={22}
-                color={tw.color("gray-50")}
-              />
+              {loading ? (
+                <ActivityIndicator size='small' color={tw.color("gray-200")} />
+              ) : (
+                <MaterialIcons
+                  name='arrow-forward'
+                  size={22}
+                  color={tw.color("gray-50")}
+                />
+              )}
             </View>
           </TouchableOpacity>
         </View>

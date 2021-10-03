@@ -1,8 +1,15 @@
-import { ADD_ITEM, REMOVE_ITEM } from "../actions/cart.actions";
+import {
+  ADD_ITEM,
+  CLEAR_CART,
+  FINISH_CONFIRMATION,
+  REMOVE_ITEM,
+  START_CONFIRMATION,
+} from "../actions/cart.actions";
 
 const INITIAL_STATE = {
   items: [],
   total: 0,
+  loading: false,
 };
 
 const CartReducer = (state = INITIAL_STATE, action) => {
@@ -18,12 +25,20 @@ const CartReducer = (state = INITIAL_STATE, action) => {
       const itemPrice = state.items.find(
         item => item.id === action.itemID
       ).price;
-      console.log("🚀 ~ file: cart.reducer.js ~ line 22 ~ CartReducer ~ action.itemID", action.itemID)
+
       return {
         ...state,
         items: state.items.filter(item => item.id !== action.itemID),
         total: state.total - Number(itemPrice),
       };
+
+    case CLEAR_CART:
+      return INITIAL_STATE;
+    case START_CONFIRMATION:
+      return { ...state, loading: true };
+    case FINISH_CONFIRMATION:
+      return { ...state, loading: false };
+
     default:
       return state;
   }

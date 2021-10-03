@@ -46,7 +46,7 @@ const ProductDetail = ({ navigation, route }) => {
 
   const handleRemove = (setFunction, deleteFunction) => {
     setFunction(false);
-    dispatch(removeFunction(productID));
+    dispatch(deleteFunction(productID));
   };
 
   const goBack = () => {

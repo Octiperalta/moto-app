@@ -5,6 +5,14 @@ import React from "react";
 import { Provider } from "react-redux";
 import MainNavigator from "./navigation";
 import store from "./store";
+import { init } from "./db";
+
+init()
+  .then(() => console.log("Database initialized successfully."))
+  .catch(err => {
+    console.log("Database initialization failed.");
+    console.log(err.message);
+  });
 
 export default function App() {
   const [loaded] = useFonts({
