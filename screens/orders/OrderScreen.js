@@ -48,7 +48,9 @@ const OrderScreen = ({ navigation }) => {
             />
           ) : (
             <View style={tw`justify-center items-center flex-1`}>
-              <Text fontWeight='semibold' style={tw`text-gray-300 text-xl`}>You don't have orders yet.</Text>
+              <Text fontWeight='semibold' style={tw`text-gray-300 text-xl`}>
+                You don't have orders yet.
+              </Text>
             </View>
           )}
         </View>
@@ -75,8 +77,8 @@ const OrderItem = ({ item }) => {
         <Text fontWeight='semibold' style={tw`text-lg text-gray-700`}>
           {item.trackingCode}
         </Text>
-        <Text fontWeight='medium' style={tw`text-gray-500`}>
-          Buenos Aires, Argentina
+        <Text fontWeight='medium' style={tw`text-gray-500`} numberOfLines={1}>
+          {item.address}
         </Text>
       </View>
 
@@ -90,4 +92,3 @@ const OrderItem = ({ item }) => {
   );
 };
 
-const styles = StyleSheet.create({});

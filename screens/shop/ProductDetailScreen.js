@@ -189,7 +189,7 @@ const ProductDetail = ({ navigation, route }) => {
           </View>
         </View>
         <View
-          style={tw`py-7 -mb-5 -mx-5 px-6 border-t border-gray-300 flex-row justify-between items-center`}>
+          style={tw`py-7 -mb-5 -mx-5 px-6 border-t border-gray-300 flex-row justify-between items-center `}>
           <View style={tw`flex flex-row items-baseline`}>
             <Text fontWeight='bold' style={tw`text-3xl text-gray-700`}>
               ${selectedProduct.price}
@@ -198,9 +198,10 @@ const ProductDetail = ({ navigation, route }) => {
               .00
             </Text>
           </View>
+
           <TouchableOpacity
             style={tw.style(
-              "px-4 py-3 rounded-lg shadow-md w-44 items-center",
+              "px-3 py-3 rounded-lg shadow-md w-48 items-center",
               inCart ? "bg-red-600" : "bg-red-500"
             )}
             onPress={() =>

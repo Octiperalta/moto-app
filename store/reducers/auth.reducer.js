@@ -2,7 +2,8 @@ import { FINISH_LOADING, SIGNUP, START_LOADING } from "../actions/auth.actions";
 
 const INITIAL_STATE = {
   token: null,
-  userId: 1,
+  // Cuando este integrada el login correctamente este valor ya no estara harcodeado y pasara a hacer el ID que proporciona Firebase
+  userId: 5,
   loading: false,
 };
 

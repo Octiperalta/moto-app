@@ -6,14 +6,14 @@ import Cart from "../../screens/cart/Cart";
 import CategoryScreen from "../../screens/shop/CategoryScreen";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import tw from "tailwind-react-native-classnames";
-import OrderConfirmation from '../../screens/cart/OrderConfirmation';
+import CheckoutNavigation from "../checkout/CheckoutNavigation";
 
 const Stack = createNativeStackNavigator();
 
 const ShopNavigator = ({ navigation, route }) => {
   useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    const tabHiddenRoutes = ["ProductDetail", "CartList", "CategoryProducts", "OrderConfirmed"];
+    const tabHiddenRoutes = ["ProductDetail", "CartList", "CategoryProducts", "OrderConfirmed", "Checkout"];
     
     if (tabHiddenRoutes.includes(routeName)) {
       navigation.setOptions({ tabBarStyle: tw`hidden` });
@@ -28,7 +28,7 @@ const ShopNavigator = ({ navigation, route }) => {
       <Stack.Screen name='ProductDetail' component={ProductDetail} />
       <Stack.Screen name='CategoryProducts' component={CategoryScreen} />
       <Stack.Screen name='CartList' component={Cart} />
-      <Stack.Screen name='OrderConfirmed' component={OrderConfirmation} />
+      <Stack.Screen name='Checkout' component={CheckoutNavigation} />
     </Stack.Navigator>
   );
 };

@@ -9,9 +9,12 @@ export const init = () => {
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS orders (
           id INTEGER PRIMARY KEY NOT NULL, 
-          trackingCode text NOT NULL,
+          trackingCode TEXT NOT NULL,
           userID INTEGER NOT NULL, 
-          totalPrice REAL NOT NULL
+          totalPrice REAL NOT NULL,
+          latitude REAL NOT NULL, 
+          longitude REAL NOT NULL, 
+          address TEXT NOT NULL
         )`,
         [],
         () => resolve(),
@@ -21,12 +24,18 @@ export const init = () => {
   });
 };
 
-export const createOrder = (total, userId, trackingCode) => {
+export const createOrder = (
+  total,
+  userId,
+  trackingCode,
+  coordinates,
+  address
+) => {
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
-        `INSERT INTO orders (userID, trackingCode, totalPrice) VALUES (?, ?, ?)`,
-        [userId, trackingCode, total],
+        `INSERT INTO orders (userID, trackingCode, totalPrice, latitude, longitude, address) VALUES (?, ?, ?, ?, ?, ?)`,
+        [userId, trackingCode, total, coordinates.lat, coordinates.lon, address],
         (_, result) => {
           resolve(result);
         },

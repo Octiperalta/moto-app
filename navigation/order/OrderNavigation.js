@@ -1,10 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../../screens/shop/HomeScreen";
-import ProductDetail from "../../screens/shop/ProductDetailScreen";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import tw from "tailwind-react-native-classnames";
-import Favorites from "../../screens/fav/Favorites";
 import OrderScreen from "../../screens/orders/OrderScreen";
 import OrderDetailScreen from "../../screens/orders/OrderDetailScreen";
 

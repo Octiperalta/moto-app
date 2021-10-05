@@ -12,16 +12,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
 import CartItem from "../../components/CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  CLEAR_CART,
-  confirmCart,
-  FINISH_CONFIRMATION,
-  START_CONFIRMATION,
-} from "../../store/actions/cart.actions";
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch();
   const cartProducts = useSelector(state => state.cart.items);
+  const checkoutButtonDisable = cartProducts.length === 0;
   const cartTotal = useSelector(state => state.cart.total);
   const userId = useSelector(state => state.auth.userId);
   const loading = useSelector(state => state.cart.loading);
@@ -33,14 +28,8 @@ const Cart = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const handleConfirmCart = () => {
-    dispatch({ type: START_CONFIRMATION });
-    dispatch(confirmCart(cartTotal, userId));
-    setTimeout(() => {
-      navigation.navigate("OrderConfirmed");
-      dispatch({ type: FINISH_CONFIRMATION });
-      dispatch({ type: CLEAR_CART });
-    }, 2000);
+  const handelGoToCheckout = () => {
+    navigation.navigate("Checkout");
   };
 
   return (
@@ -103,12 +92,18 @@ const Cart = ({ navigation }) => {
         </View>
         <View style={tw`shadow-xl`}>
           <TouchableOpacity
-            onPress={handleConfirmCart}
-            style={tw`bg-red-500 mt-4 rounded-lg px-2 py-2 flex-row justify-center items-center relative`}>
+            disabled={checkoutButtonDisable}
+            onPress={handelGoToCheckout}
+            style={tw`mt-4 rounded-lg px-2 py-2 flex-row justify-center items-center relative ${
+              checkoutButtonDisable ? " bg-red-300" : "bg-red-500"
+            }`}>
             <Text fontWeight='bold' style={tw`text-gray-50 text-lg`}>
               Buy now
             </Text>
-            <View style={tw`absolute right-4 bg-red-900 rounded-md p-1`}>
+            <View
+              style={tw`absolute right-4 rounded-md p-1 ${
+                checkoutButtonDisable ? "bg-red-400" : "bg-red-900"
+              }`}>
               {loading ? (
                 <ActivityIndicator size='small' color={tw.color("gray-200")} />
               ) : (

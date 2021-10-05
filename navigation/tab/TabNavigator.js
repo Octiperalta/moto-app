@@ -8,7 +8,7 @@ import OrderScreen from "../../screens/orders/OrderScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import tw from "tailwind-react-native-classnames";
 import FavNavigator from "../shop/FavNavigator";
-import OrderNavigator from "../order/OrderNavgation";
+import OrderNavigator from "../order/OrderNavigation";
 
 const Tab = createBottomTabNavigator();
 
