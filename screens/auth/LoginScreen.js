@@ -1,16 +1,44 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import AuthScreenWrapper from "../../components/AuthScreenWrapper";
 import Input from "../../components/Input";
+import Modal from "../../components/Modal";
+import { ERROR, login } from "../../store/actions/auth.actions";
+import { validateEmail, validatePassword } from "./validations";
 
 const LoginScreen = () => {
+  const dispatch = useDispatch();
+  const error = useSelector(state => state.auth.error);
+  console.log("Error state in component body: ", error);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [modal, setModal] = useState({ open: false, message: "" });
 
-  const handleSubmit = () => {};
+  const closeModal = () => {
+    setModal({ open: false, message: "" });
+  };
+
+  const handleLogin = () => {
+    const { ok: correctEmail, message: emailMessage } = validateEmail(email);
+
+    if (!correctEmail) return setModal({ open: true, message: emailMessage });
+
+    dispatch(login(email, password));
+    console.log("siguio");
+    console.log("Error state in handleSubmit", error);
+    if (error) return setModal({ open: true, message: error });
+  };
 
   return (
-    <AuthScreenWrapper redirectPath='Register' onSubmit={handleSubmit}>
+    <AuthScreenWrapper redirectPath='Register' onSubmit={handleLogin}>
+      <Modal
+        open={modal.open}
+        message={modal.message}
+        handleClose={closeModal}
+      />
+
       <Input
         redirectPath='Register'
         label='Email'

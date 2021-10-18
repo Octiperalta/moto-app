@@ -6,6 +6,14 @@ import tw from "tailwind-react-native-classnames";
 
 const Input = ({ label, icon, password, keyboardType, ...rest }) => {
   const [hidePassword, setHidePassword] = useState(true);
+  const [focus, setFocus] = useState(false);
+
+  const onFocus = () => {
+    setFocus(true);
+  };
+  const onBlur = () => {
+    setFocus(false);
+  };
 
   return (
     <View style={tw`mt-6`}>
@@ -20,8 +28,12 @@ const Input = ({ label, icon, password, keyboardType, ...rest }) => {
       {/* input */}
       {password ? (
         <View
-          style={tw`flex-row items-center rounded-lg border border-gray-300 pr-3 mt-1`}>
+          style={tw`flex-row items-center rounded-lg border pr-3 mt-1 ${
+            focus ? "border-red-500" : "border-gray-300"
+          }`}>
           <TextInput
+            onFocus={onFocus}
+            onBlur={onBlur}
             {...rest}
             style={tw.style("px-3 py-2 text-gray-700 flex-1", {
               fontSize: 16,
@@ -34,10 +46,12 @@ const Input = ({ label, icon, password, keyboardType, ...rest }) => {
         </View>
       ) : (
         <TextInput
+          onFocus={onFocus}
+          onBlur={onBlur}
           keyboardType={keyboardType}
           {...rest}
           style={tw.style(
-            "mt-1 px-3 py-2 rounded-lg border border-gray-300 text-gray-700",
+            "mt-1 px-3 py-2 rounded-lg border text-gray-700", focus ? "border-red-500" : "border-gray-300", 
             { fontSize: 16 }
           )}
         />

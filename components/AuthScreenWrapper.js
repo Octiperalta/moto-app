@@ -8,12 +8,14 @@ import {
   View,
   Keyboard,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import Text from "./CustomText";
 import tw from "tailwind-react-native-classnames";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { useSelector } from "react-redux";
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 
 const AuthScreenWrapper = ({
   register = false,
@@ -29,8 +31,8 @@ const AuthScreenWrapper = ({
   };
 
   return (
-    <KeyboardAvoidingView behavior='height' style={tw`flex-1`}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <KeyboardAwareScrollView style={tw`flex-1 bg-gray-50`}>
+      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}> */}
         <View style={tw`flex-1 bg-gray-50`}>
           <View style={tw`flex-1 mt-16`}>
             {/* TITLE */}
@@ -123,8 +125,8 @@ const AuthScreenWrapper = ({
             </View>
           </View>
         </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+      {/* </TouchableWithoutFeedback> */}
+    </KeyboardAwareScrollView>
   );
 };
 

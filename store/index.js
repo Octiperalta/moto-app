@@ -6,6 +6,7 @@ import ProductReducer from "./reducers/product.reducer";
 import thunk from "redux-thunk";
 import AuthReducer from "./reducers/auth.reducer";
 import OrdersReducer from "./reducers/orders.reducer";
+import ModalReducer from "./reducers/modal.reducer";
 
 const RootReducer = combineReducers({
   products: ProductReducer,
@@ -13,7 +14,8 @@ const RootReducer = combineReducers({
   categories: CategoryReducer,
   favorites: FavoritesReducer,
   auth: AuthReducer,
-  orders: OrdersReducer 
+  orders: OrdersReducer,
+  modal: ModalReducer,
 });
 
 export default createStore(RootReducer, applyMiddleware(thunk));

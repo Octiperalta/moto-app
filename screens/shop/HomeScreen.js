@@ -1,16 +1,8 @@
 import React, { useEffect } from "react";
-import {
-  FlatList,
-  Image,
-  Platform,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import Text from "../../components/CustomText";
-import { Feather, Octicons, Entypo } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import ProductItem from "../../components/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
 import {

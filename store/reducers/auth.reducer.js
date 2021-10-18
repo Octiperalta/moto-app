@@ -1,9 +1,14 @@
-import { FINISH_LOADING, SIGNUP, START_LOADING } from "../actions/auth.actions";
+import {
+  ERROR,
+  FINISH_LOADING,
+  SIGNUP,
+  START_LOADING,
+} from "../actions/auth.actions";
 
 const INITIAL_STATE = {
   token: null,
-  // Cuando este integrada el login correctamente este valor ya no estara harcodeado y pasara a hacer el ID que proporciona Firebase
-  userId: 5,
+  error: null,
+  userId: null,
   loading: false,
 };
 
@@ -15,6 +20,9 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: false };
     case SIGNUP:
       return { ...state, token: action.token, userId: action.userId };
+    case ERROR:
+      console.log("Entro reducer error", action.message);
+      return { ...state, error: action.message };
     default:
       return state;
   }

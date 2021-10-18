@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 
 const MainNavigator = () => {
   const user = useSelector(state => state.auth.userId)
+  console.log("🚀 ~ file: index.js ~ line 9 ~ MainNavigator ~ user", user)
   
   return (
     <NavigationContainer>
-      {true ? <TabNavigator /> : <AuthNavigator />}
+      {user ? <TabNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 };

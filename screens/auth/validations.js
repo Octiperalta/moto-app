@@ -14,7 +14,7 @@ export const validatePassword = password => {
   if (password.length < 6)
     return {
       ok: false,
-      message: "Password must be at least 6 characters long.",
+      message: "Sorry, that password is not strong enough. Passwords must be at least 6 characters long.",
     };
 
   return { ok: true };
