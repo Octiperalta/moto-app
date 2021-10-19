@@ -4,29 +4,37 @@ import AuthScreenWrapper from "../../components/AuthScreenWrapper";
 import Input from "../../components/Input";
 import { validateEmail, validatePassword } from "./validations";
 import Modal from "../../components/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../store/actions/auth.actions";
+import { closeModal, openModal } from "../../store/actions/modal.actions";
 
 const RegisterScreen = () => {
   const dispatch = useDispatch();
+  const modal = useSelector(state => state.modal);
 
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [modal, setModal] = useState({ open: false, message: "" });
 
-  const closeModal = () => {
-    setModal({ open: false, message: "" });
+  const handleClose = () => {
+    dispatch(closeModal());
   };
   const handleSignUp = async () => {
-    const { ok: correctEmail, message: emailMessage } = validateEmail(email);
-    const { ok: correctPassword, message: passwordMessage } = validatePassword(password);
+    const emailIsOk = validateEmail(email);
+    const passwordIsOk = validatePassword(password);
 
-    if (!fullname) return setModal({ open: true, message: "Fullname is required" });
-    if (!correctEmail) return setModal({ open: true, message: emailMessage });
-    if (!correctPassword) return setModal({ open: true, message: passwordMessage });
+    if (!fullname) {
+      return dispatch(
+        openModal("Full name field is required. Please try again.")
+      );
+    }
+    if (!emailIsOk.ok) {
+      return dispatch(openModal(emailIsOk.message));
+    }
+    if (!passwordIsOk.ok) {
+      return dispatch(openModal(passwordIsOk.message));
+    }
 
-    //! REVISAR: tengo que encontrar la  forma de manejar errores
     dispatch(signup(email, password));
   };
 
@@ -35,7 +43,7 @@ const RegisterScreen = () => {
       <Modal
         open={modal.open}
         message={modal.message}
-        handleClose={closeModal}
+        handleClose={handleClose}
       />
       <Input
         redirectPath='Register'

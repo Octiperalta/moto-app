@@ -1,9 +1,9 @@
 export const OPEN = "OPEN";
 export const CLOSE = "CLOSE";
 
-export const open = message => {
+export const openModal = message => {
   return { type: OPEN, message };
 };
-export const close = () => {
+export const closeModal = () => {
   return { type: CLOSE };
 };

@@ -1,5 +1,4 @@
 import {
-  ERROR,
   FINISH_LOADING,
   SIGNUP,
   START_LOADING,
@@ -20,9 +19,6 @@ const AuthReducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: false };
     case SIGNUP:
       return { ...state, token: action.token, userId: action.userId };
-    case ERROR:
-      console.log("Entro reducer error", action.message);
-      return { ...state, error: action.message };
     default:
       return state;
   }

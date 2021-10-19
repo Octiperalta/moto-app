@@ -4,31 +4,36 @@ import { useDispatch, useSelector } from "react-redux";
 import AuthScreenWrapper from "../../components/AuthScreenWrapper";
 import Input from "../../components/Input";
 import Modal from "../../components/Modal";
-import { ERROR, login } from "../../store/actions/auth.actions";
+import { login } from "../../store/actions/auth.actions";
+import { closeModal, openModal } from "../../store/actions/modal.actions";
 import { validateEmail, validatePassword } from "./validations";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
-  const error = useSelector(state => state.auth.error);
-  console.log("Error state in component body: ", error);
+  const modal = useSelector(state => state.modal);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [modal, setModal] = useState({ open: false, message: "" });
 
-  const closeModal = () => {
-    setModal({ open: false, message: "" });
+  const handleClose = () => {
+    dispatch(closeModal());
   };
 
   const handleLogin = () => {
-    const { ok: correctEmail, message: emailMessage } = validateEmail(email);
+    const emailIsOk = validateEmail(email);
+    const passwordIsOk = password.length !== 0;
 
-    if (!correctEmail) return setModal({ open: true, message: emailMessage });
+    if (!emailIsOk.ok) {
+      return dispatch(openModal(emailIsOk.message));
+    }
+
+    if (!passwordIsOk) {
+      return dispatch(
+        openModal("Password field is required. Please try again.")
+      );
+    }
 
     dispatch(login(email, password));
-    console.log("siguio");
-    console.log("Error state in handleSubmit", error);
-    if (error) return setModal({ open: true, message: error });
   };
 
   return (
@@ -36,7 +41,7 @@ const LoginScreen = () => {
       <Modal
         open={modal.open}
         message={modal.message}
-        handleClose={closeModal}
+        handleClose={handleClose}
       />
 
       <Input

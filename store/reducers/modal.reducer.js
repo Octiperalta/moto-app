@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   message: "",
 };
 
-const ModalReducer = (state = INITIAL_STATE, action) => {
+export default ModalReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case OPEN:
       return { ...state, open: true, message: action.message };
@@ -16,5 +16,3 @@ const ModalReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-
-export default ModalReducer;
