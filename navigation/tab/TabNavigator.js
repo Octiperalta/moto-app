@@ -19,7 +19,7 @@ const TabNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: tw`bg-gray-50 rounded-lg relative shadow-lg px-3 h-16 items-center` 
+        tabBarStyle: tw`bg-gray-50 rounded-lg relative shadow-lg px-3 h-16 items-center`,
       }}>
       <Tab.Screen
         name='HomeTab'
@@ -36,15 +36,6 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon name='favorite' size={26} focused={focused} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name='UserTab'
-        component={OrderScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <TabIcon name='person' size={32} focused={focused} />
           ),
         }}
       />

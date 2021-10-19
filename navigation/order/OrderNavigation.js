@@ -21,7 +21,7 @@ const OrderNavigator = ({ navigation, route }) => {
 
   
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRoute='Orders'>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='Orders'>
       <Stack.Screen name='Orders' component={OrderScreen} />
       <Stack.Screen name='OrderDetail' component={OrderDetailScreen} />
     </Stack.Navigator>

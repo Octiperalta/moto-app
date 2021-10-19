@@ -10,8 +10,9 @@ const OrderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.userId);
 
-  const go = () => {
-    navigation.navigate("OrderDetail");
+  const goToDetails = item => {
+    navigation.navigate("OrderDetail", { item });
+    // console.log(item);
   };
 
   const orderList = useSelector(state => state.orders.list);
@@ -21,7 +22,7 @@ const OrderScreen = ({ navigation }) => {
   }, []);
 
   const renderItem = ({ item }) => {
-    return <OrderItem item={item} />;
+    return <OrderItem item={item} onPress={goToDetails} />;
   };
 
   return (
@@ -61,10 +62,11 @@ const OrderScreen = ({ navigation }) => {
 
 export default OrderScreen;
 
-const OrderItem = ({ item }) => {
+const OrderItem = ({ item, onPress }) => {
   return (
     <TouchableOpacity
-      style={tw`flex-row bg-gray-200 px-3 py-3 mt-3 rounded-lg shadow-sm items-center`}>
+      style={tw`flex-row bg-gray-200 px-3 py-3 mt-3 rounded-lg shadow-sm items-center`}
+      onPress={() => onPress(item)}>
       {/* icon */}
       <View style={tw`bg-gray-100 rounded-lg p-2 `}>
         <MaterialIcons
@@ -91,4 +93,3 @@ const OrderItem = ({ item }) => {
     </TouchableOpacity>
   );
 };
-
