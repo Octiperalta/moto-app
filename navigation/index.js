@@ -9,7 +9,7 @@ const MainNavigator = () => {
 
   return (
     <NavigationContainer>
-      {user ? <TabNavigator /> : <AuthNavigator />}
+      {true ? <TabNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 };
