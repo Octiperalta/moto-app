@@ -50,9 +50,9 @@ const ProductItem = ({ item, onPress: onSelected }) => {
             <Text style={tw`text-base text-red-700`} fontWeight='semibold'>
               $ {item.price}
             </Text>
-            <TouchableOpacity style={tw`bg-gray-400 rounded-md p-1`}>
+            {/* <TouchableOpacity style={tw`bg-gray-400 rounded-md p-1`}>
               <Entypo name='plus' size={14} color='rgba(243, 244, 246, 1)' />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>

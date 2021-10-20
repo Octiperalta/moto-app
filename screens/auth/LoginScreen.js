@@ -12,8 +12,8 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const modal = useSelector(state => state.modal);
 
-  const [email, setEmail] = useState("test@gmail.com");
-  const [password, setPassword] = useState("123456789");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleClose = () => {
     dispatch(closeModal());

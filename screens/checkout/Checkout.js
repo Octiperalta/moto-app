@@ -41,7 +41,10 @@ const Checkout = ({ navigation, route }) => {
   const renderItem = ({ item }) => {
     return (
       <View style={tw`flex-row px-2 py-3 rounded-lg bg-gray-200 mb-3`}>
-        <Image source={{ uri: item.imageUrl }} style={tw`w-14 h-14`} />
+        <Image
+          source={{ uri: item.imageUrl }}
+          style={tw.style("w-14 h-14", { resizeMode: "contain" })}
+        />
         <View style={tw`ml-2`}>
           <Text fontWeight='semibold' style={tw`text-base text-gray-700`}>
             {item.name}
