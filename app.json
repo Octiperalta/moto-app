@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "moto-app",
-    "slug": "moto-app",
+    "name": "moto-market",
+    "slug": "moto-market",
     "version": "1.0.0",
     "platforms": [
       "ios",

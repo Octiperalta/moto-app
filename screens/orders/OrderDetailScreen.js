@@ -6,10 +6,25 @@ import Text from "../../components/CustomText";
 import MapPreview from "../../components/MapPreview";
 
 const OrderDetailScreen = ({ navigation, route }) => {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const { item } = route.params;
+
   const goBack = () => {
     navigation.goBack();
   };
-  const { item } = route.params;
 
   return (
     <View style={tw`flex-1 bg-gray-50 relative`}>
@@ -91,11 +106,12 @@ const OrderDetailScreen = ({ navigation, route }) => {
           <View style={tw`mt-2 bg-gray-100 px-3 py-3 rounded-lg`}>
             {/* section */}
             <View style={tw`flex-row items-center`}>
-              <Text fontWeight='semibold' style={tw`text-base text-gray-700`}>
-                {new Date().getDate()}{" "}
-                {new Date().toLocaleString("default", { month: "short" })}
+              <Text
+                fontWeight='semibold'
+                style={tw`text-base text-gray-700  w-16`}>
+                {new Date().getDate()} {monthNames[new Date().getMonth()]}
               </Text>
-              <View style={tw`mx-5`}>
+              <View style={tw`mr-4 ml-1`}>
                 <Octicons
                   name='primitive-dot'
                   size={17}
@@ -108,15 +124,16 @@ const OrderDetailScreen = ({ navigation, route }) => {
             </View>
 
             <View style={tw`flex-row items-center mt-5`}>
-              <Text fontWeight='semibold' style={tw`text-base text-gray-500`}>
-                {new Date().getDate() + 1}{" "}
-                {new Date().toLocaleString("default", { month: "short" })}
+              <Text
+                fontWeight='semibold'
+                style={tw`text-base text-gray-500  w-16`}>
+                {new Date().getDate() + 1} {monthNames[new Date().getMonth()]}
               </Text>
-              <View style={tw`mx-5`}>
+              <View style={tw`mr-4 ml-1`}>
                 <Octicons
                   name='primitive-dot'
                   size={17}
-                  color={tw.color("red-300")}
+                  color={tw.color("gray-300")}
                 />
               </View>
               <Text fontWeight='semibold' style={tw`text-base text-gray-500`}>
@@ -125,15 +142,16 @@ const OrderDetailScreen = ({ navigation, route }) => {
             </View>
 
             <View style={tw`flex-row items-center mt-5`}>
-              <Text fontWeight='semibold' style={tw`text-base text-gray-500`}>
-                {new Date().getDate() + 2}{" "}
-                {new Date().toLocaleString("default", { month: "short" })}
+              <Text
+                fontWeight='semibold'
+                style={tw`text-base text-gray-500  w-16`}>
+                {new Date().getDate() + 2} {monthNames[new Date().getMonth()]}
               </Text>
-              <View style={tw`mx-5`}>
+              <View style={tw`mr-4 ml-1`}>
                 <Octicons
                   name='primitive-dot'
                   size={17}
-                  color={tw.color("red-300")}
+                  color={tw.color("gray-300")}
                 />
               </View>
               <Text fontWeight='semibold' style={tw`text-base text-gray-500`}>
@@ -142,15 +160,16 @@ const OrderDetailScreen = ({ navigation, route }) => {
             </View>
 
             <View style={tw`flex-row items-center mt-5`}>
-              <Text fontWeight='semibold' style={tw`text-base text-gray-500`}>
-                {new Date().getDate() + 3}{" "}
-                {new Date().toLocaleString("default", { month: "short" })}
+              <Text
+                fontWeight='semibold'
+                style={tw`text-base text-gray-500 w-16`}>
+                {new Date().getDate() + 3} {monthNames[new Date().getMonth()]}
               </Text>
-              <View style={tw`mx-5`}>
+              <View style={tw`mr-4 ml-1`}>
                 <Octicons
                   name='primitive-dot'
                   size={17}
-                  color={tw.color("red-300")}
+                  color={tw.color("gray-300")}
                 />
               </View>
               <Text fontWeight='semibold' style={tw`text-base text-gray-500`}>

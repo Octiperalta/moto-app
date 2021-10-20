@@ -126,8 +126,9 @@ const Address = ({ navigation }) => {
           )}
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={true}
           onPress={() => console.log("Falta implementar")}
-          style={tw`flex-row mt-3 py-2 items-center bg-gray-100 border border-red-500 rounded justify-center`}>
+          style={tw`flex-row mt-3 py-2 items-center bg-gray-100 border border-red-500 rounded justify-center bg-gray-50 opacity-40`}>
           <MaterialIcons
             name='location-pin'
             size={25}

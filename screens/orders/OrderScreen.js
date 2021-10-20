@@ -9,13 +9,11 @@ import { loadOrders } from "../../store/actions/orders.actions";
 const OrderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.auth.userId);
+  const orderList = useSelector(state => state.orders.list);
 
   const goToDetails = item => {
     navigation.navigate("OrderDetail", { item });
-    // console.log(item);
   };
-
-  const orderList = useSelector(state => state.orders.list);
 
   useEffect(() => {
     dispatch(loadOrders(userId));

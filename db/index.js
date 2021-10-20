@@ -35,7 +35,14 @@ export const createOrder = (
     db.transaction(tx => {
       tx.executeSql(
         `INSERT INTO orders (userID, trackingCode, totalPrice, latitude, longitude, address) VALUES (?, ?, ?, ?, ?, ?)`,
-        [userId, trackingCode, total, coordinates.lat, coordinates.lon, address],
+        [
+          userId,
+          trackingCode,
+          total,
+          coordinates.lat,
+          coordinates.lon,
+          address,
+        ],
         (_, result) => {
           resolve(result);
         },

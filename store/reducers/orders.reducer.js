@@ -32,7 +32,8 @@ export default OrdersReducer = (state = INITIAL_STATE, action) => {
               order.totalPrice,
               order.trackingCode,
               { lon: order.longitude, lat: order.latitude },
-              order.address
+              order.address,
+              order.userID
             )
         ),
       };

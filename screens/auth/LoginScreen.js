@@ -6,14 +6,14 @@ import Input from "../../components/Input";
 import Modal from "../../components/Modal";
 import { login } from "../../store/actions/auth.actions";
 import { closeModal, openModal } from "../../store/actions/modal.actions";
-import { validateEmail, validatePassword } from "./validations";
+import { validateEmail } from "./validations";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const modal = useSelector(state => state.modal);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("asd@gmail.com");
+  const [password, setPassword] = useState("123456789");
 
   const handleClose = () => {
     dispatch(closeModal());

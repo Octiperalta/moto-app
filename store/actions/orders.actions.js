@@ -5,7 +5,6 @@ export const LOAD_ORDERS = "LOAD_ORDERS";
 export const START_CONFIRMATION = "START_CONFIRMATION";
 export const FINISH_CONFIRMATION = "FINISH_CONFIRMATION";
 
-
 export const loadOrders = id => {
   return async dispatch => {
     try {
@@ -19,7 +18,7 @@ export const loadOrders = id => {
 
 export const confirmOrder = (cartTotal, userId, coordinates, address) => {
   return async dispatch => {
-    dispatch({ type: START_CONFIRMATION})
+    dispatch({ type: START_CONFIRMATION });
     try {
       const trackingCode = Date.now().toString();
       const result = await createOrder(
@@ -30,6 +29,7 @@ export const confirmOrder = (cartTotal, userId, coordinates, address) => {
         address
       );
 
+
       dispatch({
         type: ADD_ORDER,
         payload: {
@@ -38,6 +38,7 @@ export const confirmOrder = (cartTotal, userId, coordinates, address) => {
           trackingCode,
           coordinates,
           address,
+          userId,
         },
       });
     } catch (err) {
